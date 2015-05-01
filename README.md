@@ -122,6 +122,21 @@ Sometimes the app will disconnect from the Bean but show that it's still connect
 
 The iOS app frequently loses connection to the Bean. This won't affect your cooking—the Bean holds the last-set values in memory and continues to use them to regulate the temperature of the water in the cooker.
 
+## Xcode compilation difficulty || Git issue involving a missing “AppMessages.h”
+
+I executed a few oddball steps in order to fix this issue so I could get the thing to compile. 
+
+* In the terminal, I cd’d into the project’s “bean-sous-vide-with-OLED-and-PID” base directory.
+* $ git rm Bean-iOS-OSX-SDK/ -r”
+* then removed the Bean-iOS-OSX-SDK directory (used the Finder, but you could do a “rm -Rf Bean-iOS-OSX-SDK”.
+* $ git submodule add https://github.com/PunchThrough/Bean-iOS-OSX-SDK.git
+* $ git submodule update --init --recursive
+
+That got the iOS API in a state in which it’d compile, which is the next step. At that point, follow the steps listed at:
+http://beantalk.punchthrough.com/t/getting-started-with-the-ios-api/372
+
+After that, you should be able to compile a version of the Sous Vide app for your iOS device or for the simulator using Xcode.
+
 # Questions?
 
 If you have any questions about this project, the best place to ask is the [Beantalk community forum](http://beantalk.punchthrough.com/).

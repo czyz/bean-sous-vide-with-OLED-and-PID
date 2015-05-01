@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>557C8594-D089-4561-AF6F-0F2BAE5C3CCB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Sous Vide</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>39572FF45BBA82D9E0A47E8917BFD83331580CAC</key>
+		<string>https://bitbucket.org/punchthroughdesign/bean-application-message-definitions.git</string>
+		<key>4E972D5D7D21C90D5F21CCCB7813586DCADDD8A1</key>
+		<string>https://github.com/PunchThrough/Bean-iOS-OSX-SDK.git</string>
+		<key>AF979956FB35F04B8EFE81ECBE488B38E36C8EE9</key>
+		<string>https://github.com/czyz/bean-sous-vide-with-OLED-and-PID.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Sous Vide.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>39572FF45BBA82D9E0A47E8917BFD83331580CAC</key>
+		<string>../Bean-iOS-OSX-SDK/App%20Message%20Definitions/</string>
+		<key>4E972D5D7D21C90D5F21CCCB7813586DCADDD8A1</key>
+		<string>..Bean-iOS-OSX-SDK</string>
+		<key>AF979956FB35F04B8EFE81ECBE488B38E36C8EE9</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/czyz/bean-sous-vide-with-OLED-and-PID.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AF979956FB35F04B8EFE81ECBE488B38E36C8EE9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>39572FF45BBA82D9E0A47E8917BFD83331580CAC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>App%20Message%20Definitions</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AF979956FB35F04B8EFE81ECBE488B38E36C8EE9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>bean-sous-vide-with-OLED-and-PID</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4E972D5D7D21C90D5F21CCCB7813586DCADDD8A1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>bean-sous-vide-with-OLED-and-PIDBean-iOS-OSX-SDK</string>
+		</dict>
+	</array>
+</dict>
+</plist>

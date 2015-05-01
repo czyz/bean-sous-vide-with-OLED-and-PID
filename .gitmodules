@@ -1,0 +1,3 @@
+[submodule "Bean-iOS-OSX-SDK"]
+	path = Bean-iOS-OSX-SDK
+	url = https://github.com/PunchThrough/Bean-iOS-OSX-SDK.git
