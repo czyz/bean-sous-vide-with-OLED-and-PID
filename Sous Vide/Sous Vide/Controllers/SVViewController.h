@@ -26,4 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *cookingLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *cookingSwitch;
 
+@property (weak, nonatomic) IBOutlet UIButton *autotune;
+@property (weak, nonatomic) IBOutlet UITextField *pidKp;
+@property (weak, nonatomic) IBOutlet UITextField *pidKi;
+@property (weak, nonatomic) IBOutlet UITextField *pidKd;
+
 @end

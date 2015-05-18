@@ -33,12 +33,24 @@
 #define CMD_ENABLE 0x01
 #define CMD_DISABLE 0x02
 #define CMD_SETTARGET 0x03
+#define CMD_SET_KP 0x08
+#define CMD_SET_KI 0x09
+#define CMD_SET_KD 0x0A
+
+
+#define CMD_AUTOTUNE 0x06
 
 // Bytes indicating message types for Bean messages
 #define MSG_STATUS 0x00
 #define MSG_ENABLE 0x01
 #define MSG_DISABLE 0x02
 #define MSG_SET_TARGET_TEMP 0x03
+
+#define MSG_AUTOTUNE_START 0x06
+#define MSG_AUTOTUNE_FINISH 0x07
+#define MSG_SET_KP 0x08
+#define MSG_SET_KI 0x09
+#define MSG_SET_KD 0x0A
 
 // State machine states for parsing Bean messages
 #define ST_READY 0x00               // Waiting for message type byte
@@ -47,6 +59,18 @@
 #define ST_STATUS_ENABLED 0x03      // Got target temp; waiting for ENABLED byte
 #define ST_STATUS_HEATING 0x05      // Got ENABLED byte; waiting for HEATING byte
 #define ST_SET_TARGET_TEMP 0x04     // Got message type SET_TARGET_TEMP (0x03); waiting for target temp
+
+#define ST_AUTOTUNE_STARTED 0x06
+#define ST_AUTOTUNE_FINISHED 0x07
+
+#define ST_SET_KP 0x08
+#define ST_SET_KI 0x09
+#define ST_SET_KD 0x0A
+
+#define ST_STATUS_KP 0x0B
+#define ST_STATUS_KI 0x0C
+#define ST_STATUS_KD 0x0A
+
 #define ST_DONE 0xFF                // Got expected message bytes; waiting for terminator (0xFF)
 
 #import "SVViewController.h"
@@ -64,10 +88,14 @@
 // These variables are used to store parsed data from serial messages
 @property unsigned char msgType;            // The last message type parsed (STATUS, ENABLE, DISABLE, SETTARGET)
 @property unsigned char msgCurrentState;    // The current state of the parser state machine
-@property unsigned char msgCurrentTemp;     // Storage for the "current cooker temperature" variable
-@property unsigned char msgTargetTemp;      // Storage for the "target cooker temperature" variable
+@property float msgCurrentTemp;     // Storage for the "current cooker temperature" variable
+@property float msgTargetTemp;      // Storage for the "target cooker temperature" variable
 @property BOOL msgEnabled;                  // Storage for the "is the cooker enabled right now?" boolean
 @property BOOL msgHeating;                  // Storage for the "is the cooker heating right now?" boolean
+@property float msgKp;      // Storage for the "Kp" variable
+@property float msgKi;      // Storage for the "Ki" variable
+@property float msgKd;      // Storage for the "Kd" variable
+
 
 @end
 
@@ -159,11 +187,37 @@
 {
     const char *dataBytes = (const char *)[data bytes];
     unsigned char dataByte = dataBytes[0];
+    
+    //got this method of converting 4 bytes to float with endian swap
+    // from http://www.codeitive.com/7QyxXVqUeX/get-float-value-from-nsdata-objectivec-ios.html
+    // I tried several other methods, it's the only one that worked.
+    
+    uint32_t hostData = CFSwapInt32BigToHost(*(const uint32_t *)[data bytes]);
+    float dataFloat = *(float *)(&hostData);
+    
+//    int dataLength; //just debugging
+//    dataLength = [data length];
+
+    
+    if (([data length] > 3)) {
+        //we've received something more than a single byte, since the only other data type we're sending are floats
+        //let's store it in a float
+        //  Why doesn't this work?        [data getBytes:&dataFloat length:sizeof(float)];
+        
+        //trying this instead
+//        dataFloat = dataBytes[0];
+        NSLog(@"dataFloat: %f", dataFloat);
+
+        
+    }
+
+    
+    
 
     if (self.msgCurrentState == ST_READY) {
         // Read message type and set next state accordingly
         self.msgType = dataByte;
-
+        
         if (self.msgType == MSG_STATUS) {
             self.msgCurrentState = ST_STATUS_CURRENT_TEMP;
             
@@ -176,14 +230,31 @@
         } else if (self.msgType == MSG_SET_TARGET_TEMP) {
             self.msgCurrentState = ST_SET_TARGET_TEMP;
         
+        } else if (self.msgType == MSG_AUTOTUNE_START) {
+            self.msgCurrentState = ST_AUTOTUNE_STARTED;
+
+        } else if (self.msgType == MSG_AUTOTUNE_FINISH) {
+            self.msgCurrentState = ST_AUTOTUNE_FINISHED;
+            
+        } else if (self.msgType == MSG_SET_KP) {
+            
+            self.msgCurrentState = ST_SET_KP;
+            
+        } else if (self.msgType == MSG_SET_KI) {
+            self.msgCurrentState = ST_SET_KI;
+            
+        } else if (self.msgType == MSG_SET_KD) {
+            self.msgCurrentState = ST_SET_KD;
+
         } // Ignore all other messages
 
     } else if (self.msgCurrentState == ST_STATUS_CURRENT_TEMP) {
-        self.msgCurrentTemp = dataByte;
+        self.msgCurrentTemp = dataFloat;
+        
         self.msgCurrentState = ST_STATUS_TARGET_TEMP;
         
     } else if (self.msgCurrentState == ST_STATUS_TARGET_TEMP) {
-        self.msgTargetTemp = dataByte;
+        self.msgTargetTemp = dataFloat;
         self.msgCurrentState = ST_STATUS_ENABLED;
         
     } else if (self.msgCurrentState == ST_STATUS_ENABLED) {
@@ -192,10 +263,27 @@
         
     } else if (self.msgCurrentState == ST_STATUS_HEATING) {
         self.msgHeating = dataByte;
+        self.msgCurrentState = ST_STATUS_KP;
+        
+    } else if (self.msgCurrentState == ST_STATUS_KP) {
+        self.msgKp = dataFloat;
+        self.msgCurrentState = ST_STATUS_KI;
+
+    } else if (self.msgCurrentState == ST_STATUS_KI) {
+        self.msgKi = dataFloat;
+        self.msgCurrentState = ST_STATUS_KD;
+        
+    } else if (self.msgCurrentState == ST_STATUS_KD) {
+        self.msgKd = dataFloat;
+        self.msgCurrentState = ST_DONE;
+    
+    
+    } else if (self.msgCurrentState == ST_SET_TARGET_TEMP) {
+        self.msgTargetTemp = dataFloat;
         self.msgCurrentState = ST_DONE;
         
-    } else if (self.msgCurrentState == ST_SET_TARGET_TEMP) {
-        self.msgTargetTemp = dataByte;
+    } else if (self.msgCurrentState == ST_AUTOTUNE_FINISHED) {
+        [self endAutotune];
         self.msgCurrentState = ST_DONE;
         
     } else if (self.msgCurrentState == ST_DONE && dataByte == 0xFF) {
@@ -204,7 +292,11 @@
             [self enableControlsWithTemp:self.msgCurrentTemp
                               targetTemp:self.msgTargetTemp
                                isEnabled:self.msgEnabled
-                               isHeating:self.msgHeating];
+                               isHeating:self.msgHeating
+                              pidKpvalue:self.msgKp
+                              pidKivalue:self.msgKi
+                              pidKdvalue:self.msgKd
+             ];
         }
         self.msgCurrentState = ST_READY;
     }
@@ -250,10 +342,30 @@
 }
 
 // Display the current temperature of the cooker.
-- (void)showTemp:(int)temp
+- (void)showTemp:(float)temp
 {
-    [self.tempLabel setText:[NSString stringWithFormat:@"%i° F", temp]];
+    [self.tempLabel setText:[NSString stringWithFormat:@"%0.2f° F", temp]];
 }
+
+// Display the Kp tune setting
+- (void)showKp:(float)Kp
+{
+    [self.pidKp setText:[NSString stringWithFormat:@"%0.2f", Kp]];
+}
+
+// Display the Ki tune setting
+- (void)showKi:(float)Ki
+{
+    [self.pidKi setText:[NSString stringWithFormat:@"%0.2f", Ki]];
+}
+
+// Display the Kd tune setting
+- (void)showKd:(float)Kd
+{
+    [self.pidKd setText:[NSString stringWithFormat:@"%0.2f", Kd]];
+}
+
+
 
 // Display the target temperature.
 - (void)showTargetTemp:(int)targetTemp
@@ -280,10 +392,13 @@
 // Enable controls with latest status data. We don't want to enable the controls
 // and un-dim the display with stale data, so we have to pass in fresh data
 // (temp, enabled, etc.) when we call this method.
-- (void)enableControlsWithTemp:(int)temp
+- (void)enableControlsWithTemp:(float)temp
                     targetTemp:(int)targetTemp
                      isEnabled:(BOOL)enabled
                      isHeating:(BOOL)heating
+                    pidKpvalue:(double)pidKp
+                    pidKivalue:(double)pidKi
+                    pidKdvalue:(double)pidKd
 {
     self.heatingIcon.alpha = ALPHA_OPAQUE;
     self.tempLabel.alpha = ALPHA_OPAQUE;
@@ -294,9 +409,20 @@
     self.targetTempSlider.alpha = ALPHA_OPAQUE;
     [self.cookingSwitch setEnabled:YES];
     
+    [self.autotune setEnabled:YES];
+    [self.pidKp setEnabled:YES];
+    [self.pidKi setEnabled:YES];
+    [self.pidKd setEnabled:YES];
+    
+    
+    
     [self showTemp:temp];
     [self showEnabled:enabled];
     [self showHeating:heating];
+    [self showKp:pidKp];
+    [self showKi:pidKi];
+    [self showKd:pidKd];
+    
     if (!self.targetTempSliding) {
         [self showTargetTemp:targetTemp];
     }
@@ -319,6 +445,15 @@
     [self.heatingLabel setText:@"Unknown"];
     [self.targetTempLabel setText:@"?° F"];
     [self.cookingLabel setText:@"?"];
+    
+    [self.autotune setEnabled:NO];
+    [self.pidKp setEnabled:NO];
+    [self.pidKi setEnabled:NO];
+    [self.pidKd setEnabled:NO];
+    self.autotune.alpha = ALPHA_FADED;
+    self.pidKp.alpha = ALPHA_FADED;
+    self.pidKi.alpha = ALPHA_FADED;
+    self.pidKd.alpha = ALPHA_FADED;
 }
 
 // targetTempDown, targetTempChanged, targetTempUp keep the slider from
@@ -345,6 +480,22 @@
     [self setTargetTemp:[sender value]];
 }
 
+
+- (IBAction)editedKp:(id)sender {
+    
+    [self setKp:[sender floatValue]];
+}
+
+- (IBAction)editedKi:(id)sender {
+    [self setKi:[sender floatValue]];
+
+}
+
+- (IBAction)editedKd:(id)sender {
+    [self setKd:[sender floatValue]];
+
+}
+
 // Handle changes in the Cooking Enable switch.
 - (IBAction)enableSwitchChanged:(UISwitch *)sender
 {
@@ -354,6 +505,22 @@
         [self disableHeater];
     }
 }
+
+- (IBAction)autotuneButtonClicked:(id)sender {
+    [sender setTitle:@"tuning…" forState:UIControlStateNormal];
+
+    //disable PID controls during autotune
+    [sender setEnabled:NO];
+    [self.pidKp setEnabled:NO];
+    [self.pidKi setEnabled:NO];
+    [self.pidKd setEnabled:NO];
+    //will need to re-enable and change the text back after receiving info from the arduino that tuning has finished. Actually, this could change to various tuning status messages, unless I do that in the main icon area at the center of the screen. Or it could become a "cancel autotune" button.
+    
+    [self startAutotune];
+    
+    
+}
+
 
 // Run this when the Bean disconnects or Bluetooth chokes.
 - (void)reset
@@ -408,11 +575,129 @@
     [self sendData:(char[]){CMD_DISABLE} length:1];
 }
 
-// Set the Bean target temperature.
-- (void)setTargetTemp:(unsigned char)targetTemp
+// Begin autotune.
+- (void)startAutotune
 {
-    [self sendData:(char[]){CMD_SETTARGET, targetTemp} length:2];
+     [self sendData:(char[]){CMD_AUTOTUNE} length:1];
 }
+
+// End autotune
+- (void)endAutotune
+{
+    [self.autotune setTitle:@"autotune" forState:UIControlStateNormal];
+    
+    //re-enable PID controls and autotune button
+    [self.autotune setEnabled:YES];
+    [self.pidKp setEnabled:YES];
+    [self.pidKi setEnabled:YES];
+    [self.pidKd setEnabled:YES];
+    //will need to re-enable and change the text back after receiving info from the arduino that tuning has finished. Actually, this could change to various tuning status messages, unless I do that in the main icon area at the center of the screen. Or it could become a "cancel autotune" button.
+    
+}
+
+
+// Set the Bean target temperature.
+- (void)setTargetTemp:(float)targetTemp
+{
+//    [self sendData:(char[]){CMD_SETTARGET, targetTemp} length:2];
+    
+    //method to send serialized numbers borrowed from http://www.gammon.com.au/serial
+//    const char startOfNumberDelimiter = '<';
+//    const char endOfNumberDelimiter   = '>';
+//    
+//    int sizeOfData = 3 + sizeof(float);
+//    [self sendData:(char[]){CMD_SETTARGET, startOfNumberDelimiter, targetTemp, endOfNumberDelimiter} length:sizeOfData];
+
+    
+    //lets send our float as a string so that the arduino's parsefloat function can interpret it
+    
+    NSString *floatString = [NSString stringWithFormat:@"%f", targetTemp];
+    
+    char *cstrFloat = [floatString UTF8String];
+    
+    int sizeOfData = sizeof(cstrFloat);
+    
+    [self sendData:(char[]){CMD_SETTARGET} length:1];
+    [self sendData:cstrFloat length:sizeOfData];
+    NSLog(@"sent targetTemp: %s", cstrFloat);
+
+    
+}
+
+
+// Set the Bean Kp value
+- (void)setKp:(float)targetKp
+{
+    
+    
+    //method to send serialized numbers borrowed from http://www.gammon.com.au/serial
+//    const char startOfNumberDelimiter = '<';
+//    const char endOfNumberDelimiter   = '>';
+//    
+//    int sizeOfData = 3 + sizeof(float);
+//    [self sendData:(char[]){CMD_SET_KP, startOfNumberDelimiter, targetKp, endOfNumberDelimiter} length:sizeOfData];
+//    
+    NSString *floatString = [NSString stringWithFormat:@"%f", targetKp];
+    
+    const char *cstrFloat = [floatString UTF8String];
+    
+    int sizeOfData = sizeof(cstrFloat);
+    
+    [self sendData:(char[]){CMD_SET_KP} length:1];
+    [self sendData:cstrFloat length:sizeOfData];
+    NSLog(@"sent Kp: %s", cstrFloat);
+    
+    
+}
+
+// Set the Bean Ki value
+- (void)setKi:(float)targetKi
+{
+    
+//    //method to send serialized numbers borrowed from http://www.gammon.com.au/serial
+//    const char startOfNumberDelimiter = '<';
+//    const char endOfNumberDelimiter   = '>';
+//    
+//    int sizeOfData = 3 + sizeof(float);
+//    [self sendData:(char[]){CMD_SET_KI, startOfNumberDelimiter, targetKi, endOfNumberDelimiter} length:sizeOfData];
+    
+    
+    NSString *floatString = [NSString stringWithFormat:@"%f", targetKi];
+    
+    const char *cstrFloat = [floatString UTF8String];
+    
+    int sizeOfData = sizeof(cstrFloat);
+    
+    [self sendData:(char[]){CMD_SET_KI} length:1];
+    [self sendData:cstrFloat length:sizeOfData];
+    NSLog(@"sent Ki: %s", cstrFloat);
+    
+}
+
+// Set the Bean Kd valu
+- (void)setKd:(float)targetKd
+{
+    
+    //method to send serialized numbers borrowed from http://www.gammon.com.au/serial
+//    const char startOfNumberDelimiter = '<';
+//    const char endOfNumberDelimiter   = '>';
+//    
+//    int sizeOfData = 3 + sizeof(float);
+//    [self sendData:(char[]){CMD_SET_KD, startOfNumberDelimiter, targetKd, endOfNumberDelimiter} length:sizeOfData];
+    
+    NSString *floatString = [NSString stringWithFormat:@"%f", targetKd];
+    
+    const char *cstrFloat = [floatString UTF8String];
+    
+    int sizeOfData = sizeof(cstrFloat);
+    
+    [self sendData:(char[]){CMD_SET_KD} length:1];
+    [self sendData:cstrFloat length:sizeOfData];
+    NSLog(@"sent Kd: %s", cstrFloat);
+
+    
+}
+
 
 // Start asking the Bean for status updates every 5 seconds.
 - (void)startUpdateRequests
