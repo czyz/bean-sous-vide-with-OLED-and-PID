@@ -567,12 +567,18 @@
 - (void)enableHeater
 {
     [self sendData:(char[]){CMD_ENABLE} length:1];
+    
+    // when heater is enabled, disable sleep
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 // Disable heating. The Bean will not turn on the heater pin even if the temperature is low.
 - (void)disableHeater
 {
     [self sendData:(char[]){CMD_DISABLE} length:1];
+    
+    //if heater is disabled, re-enable sleep
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 // Begin autotune.
