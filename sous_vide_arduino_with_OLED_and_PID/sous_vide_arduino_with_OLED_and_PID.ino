@@ -254,8 +254,8 @@ void loop()
         
 //        dtostrf(freeMemory(),7,0,ab);
 //        dtostrf((onTime/WindowSize),4,3,ab);
-          dtostrf(windowStartTime,7,0,ab);
-          sendStrXY(ab,4,4);
+//          dtostrf(windowStartTime,7,0,ab);
+//          sendStrXY(ab,4,4);
         
           unsigned long t = millis()/1000; 
           int h = t/3600; //(hours)
@@ -266,7 +266,7 @@ void loop()
           sendStrXY(ab,2,4);
 
         
-//        sendStrXY("Target:",4,4);
+        sendStrXY("Target:",4,4);
         
         //digitalWrite(PWR_ON, LOW); //Display EN Off
         //Bean.sleep(2);
