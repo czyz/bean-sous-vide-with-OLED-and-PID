@@ -23,6 +23,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *targetTempLabel;
 @property (weak, nonatomic) IBOutlet UISlider *targetTempSlider;
+@property (weak, nonatomic) IBOutlet UIStepper *targetTempStepper;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *cookingLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *cookingSwitch;
 
@@ -30,5 +33,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *pidKp;
 @property (weak, nonatomic) IBOutlet UITextField *pidKi;
 @property (weak, nonatomic) IBOutlet UITextField *pidKd;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
+
 
 @end

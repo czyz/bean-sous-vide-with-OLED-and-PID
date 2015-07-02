@@ -35,7 +35,7 @@
 		3686071D1953878500FC4A64 /* hot@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3686071B1953878500FC4A64 /* hot@2x~iphone.png */; };
 		36860720195387E400FC4A64 /* hot~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3686071F195387E400FC4A64 /* hot~iphone.png */; };
 		36860722195387EF00FC4A64 /* cool~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 36860721195387EF00FC4A64 /* cool~iphone.png */; };
-		B168B5C51AF760ED005AAEF7 /* libBean iOS Library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B168B5C41AF760ED005AAEF7 /* libBean iOS Library.a */; };
+		B13521D31B44C3DD00CF4CEA /* libBean iOS Library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B13521D21B44C3DD00CF4CEA /* libBean iOS Library.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +82,7 @@
 		3686071B1953878500FC4A64 /* hot@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hot@2x~iphone.png"; sourceTree = "<group>"; };
 		3686071F195387E400FC4A64 /* hot~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hot~iphone.png"; sourceTree = "<group>"; };
 		36860721195387EF00FC4A64 /* cool~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cool~iphone.png"; sourceTree = "<group>"; };
-		B168B5C41AF760ED005AAEF7 /* libBean iOS Library.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libBean iOS Library.a"; sourceTree = "<group>"; };
+		B13521D21B44C3DD00CF4CEA /* libBean iOS Library.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libBean iOS Library.a"; sourceTree = "<group>"; };
 		B168B5C61AF761B1005AAEF7 /* PTDBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTDBean.h; sourceTree = "<group>"; };
 		B168B5C71AF761B1005AAEF7 /* PTDBeanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTDBeanManager.h; sourceTree = "<group>"; };
 		B168B5C81AF761B1005AAEF7 /* PTDBeanRadioConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTDBeanRadioConfig.h; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				368606CE19537A9900FC4A64 /* CoreGraphics.framework in Frameworks */,
-				B168B5C51AF760ED005AAEF7 /* libBean iOS Library.a in Frameworks */,
+				B13521D31B44C3DD00CF4CEA /* libBean iOS Library.a in Frameworks */,
 				368606D019537A9900FC4A64 /* UIKit.framework in Frameworks */,
 				368606CC19537A9900FC4A64 /* Foundation.framework in Frameworks */,
 			);
@@ -136,11 +136,11 @@
 		368606CA19537A9900FC4A64 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B13521D21B44C3DD00CF4CEA /* libBean iOS Library.a */,
 				B168B5C61AF761B1005AAEF7 /* PTDBean.h */,
 				B168B5C71AF761B1005AAEF7 /* PTDBeanManager.h */,
 				B168B5C81AF761B1005AAEF7 /* PTDBeanRadioConfig.h */,
 				B168B5C91AF761B1005AAEF7 /* PTDBleDevice.h */,
-				B168B5C41AF760ED005AAEF7 /* libBean iOS Library.a */,
 				368606CB19537A9900FC4A64 /* Foundation.framework */,
 				368606CD19537A9900FC4A64 /* CoreGraphics.framework */,
 				368606CF19537A9900FC4A64 /* UIKit.framework */,
