@@ -6,10 +6,12 @@
 *Above: The unfinished sous-vide machine with OLED display, cooking a steak while awaiting the next round of revisions*
 
 
-This is a branch of [mplewis's excellent "DIY Sous-Vide with Bean"](http://beantalk.punchthrough.com/t/sous-vide-with-bean-and-a-slow-cooker/483). I've added the following features to that project:
+This is a branch of [mplewis's excellent "DIY Sous-Vide with Bean"](http://beantalk.punchthrough.com/t/sous-vide-with-bean-and-a-slow-cooker/483). It's basically a mashup of that project and [Bill Earl's Sous Vide powered by Arduino project at Adafruit(https://learn.adafruit.com/sous-vide-powered-by-arduino-the-sous-viduino/the-whole-enchilada)].  
+
+This branch adds the following features:
 
 * OLED display (show's heating status, current temp, target temp, elapsed time). I'm using the display Mike Rankin [sold for a short while on Tindie](https://www.tindie.com/products/miker/066-oled-display-for-the-lightblue-bean/). I've incorporated [his code for the display](https://github.com/mike-rankin/PunchThrough_Bean_i2c_Oled/tree/master/Code). You may need to switch it out for other OLED displays, though according to [his post here](http://beantalk.punchthrough.com/t/tiny-0-66-oled-display-on-the-bean/505/6) it's not very different from the Microview graphics library.  
-* Changed heating control from simple on-off thermostat to use [Brett Beauregard's PID controller library](http://playground.arduino.cc/Code/PIDLibrary), along with [his PIDAutotuneLibrary](http://playground.arduino.cc/Code/PIDAutotuneLibrary).
+* Changed heating control from simple on-off thermostat to use [Brett Beauregard's PID controller library](http://playground.arduino.cc/Code/PIDLibrary), along with [his PIDAutotuneLibrary](http://playground.arduino.cc/Code/PIDAutotuneLibrary). 
 * Added a stepper control to the iOS app –the slider was a bit coarse for fine temperature control.
 * iOS app and Arduino communicate temperature as float value rather than int. Unnecessary precision perhaps, but it was an interesting problem to try to solve. Ended up storing those variables on the Arduino as a union so as to access them as either floating point values or binary data, and then having to reverse their endianness before sending to iOS. For the iOS to Arduino direction I'm using Serial.parseFloat, though I think it would likely be faster to just send the bytes. Communication between the apps is a bit complex.
 
