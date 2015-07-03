@@ -1,5 +1,11 @@
 # DIY Sous-Vide with Bean, OLED display, and PID
 
+
+[![Sous-vide components, all together](http://zachfine.com/dropzone/im/sous-vide.jpg)](http://zachfine.com/dropzone/im/sous-vide.jpg)
+
+*Above: The unfinished sous-vide machine with OLED display, cooking a steak while awwaiting the next round of revisions*
+
+
 This is a branch of [mplewis's excellent "DIY Sous-Vide with Bean"](http://beantalk.punchthrough.com/t/sous-vide-with-bean-and-a-slow-cooker/483). I've added the following features to that project:
 
 * OLED display (show's heating status, current temp, target temp, elapsed time). I'm using the display Mike Rankin [sold for a short while on Tindie](https://www.tindie.com/products/miker/066-oled-display-for-the-lightblue-bean/). I've incorporated [his code for the display](https://github.com/mike-rankin/PunchThrough_Bean_i2c_Oled/tree/master/Code). You may need to switch it out for other OLED displays, though according to [his post here](http://beantalk.punchthrough.com/t/tiny-0-66-oled-display-on-the-bean/505/6) it's not very different from the Microview graphics library.  
@@ -7,6 +13,23 @@ This is a branch of [mplewis's excellent "DIY Sous-Vide with Bean"](http://beant
 * Added a stepper control to the iOS app –the slider was a bit coarse for fine temperature control.
 * iOS app and Arduino communicate temperature as float value rather than int. Unnecessary precision perhaps, but it was an interesting problem to try to solve. Ended up storing those variables on the Arduino as a union so as to access them as either floating point values or binary data, and then having to reverse their endianness before sending to iOS. For the iOS to Arduino direction I'm using Serial.parseFloat, though I think it would likely be faster to just send the bytes. Communication between the apps is a bit complex.
 
+[![The OLED display](http://zachfine.com/dropzone/im/OLED_display.jpg)](http://zachfine.com/dropzone/im/OLED_display.jpg)
+
+*Above: The OLED display*
+
+
+I've posted [a video of the hardware side of things in action](https://vimeo.com/132490556). 
+
+Apart from the changes to the Arduino and iOS app code and the addition of the OLED, I've implemented a few hardware bits differently:
+
+* The bean is running off a 3.3V/5V power supply I got for a couple bucks that looks a lot like [this one](http://www.amazon.com/Breadboard-Power-Supply-Module-Solderless/dp/B00BXWV2F6).
+* Rather than the PowerSwitch Tail, I'm using a very inexpensive [5V relay board](http://www.dx.com/p/arduino-5v-relay-module-blue-black-121354#.VZXQlWBU7Qc) made for arduino. I verified before use that my crock pot's power needs were under 10 amps. I've since purchased a heftier 30A relay module, but I don't think it's necessary for this particular cooker.
+* The bean doesn't produce enough power to saturate the relay's coils (actually, it will work for a few minutes, but then crash if not die - that's a wall I ran into headlong). So I'd recommend having the Bean's digital pin control a transistor (I had an s9014 handy) to switch the power-supply's 5V line to the relay's signal pin. The relay board already has a diode connected between legs of the relay, so I didn't have to worry about EMF. A 220ohm resistor between the Bean's digital pin and the s9014 resistor’s base ensured that the draw on the bean wouldn’t exceed 20ma or so.
+* I'm using [this high temperature submersible pump](http://www.amazon.com/gp/product/B007XHZ25G/ref=pd_lpo_sbs_dp_ss_1?pf_rd_p=1944687682&pf_rd_s=lpo-top-stripe-1&pf_rd_t=201&pf_rd_i=B004HHW0FU&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=1T61Q2965DPH1W5KFHPN) to circulate water inside the cooker.
+
+[![A screenshot of the revised app](http://zachfine.com/dropzone/im/sous-vide-screenshot.jpg)](http://zachfine.com/dropzone/im/sous-vide-screenshot.jpg)
+
+*Above: A screenshot of the revised app*
 
 ## iOS app known bugs:
 
