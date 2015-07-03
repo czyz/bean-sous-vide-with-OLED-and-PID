@@ -20,6 +20,7 @@ This branch adds the following features:
 *Above: The OLED display*
 
 
+## Video
 I've posted [a video of the hardware side of things in action](https://vimeo.com/132490556). 
 
 Apart from the changes to the Arduino and iOS app code and the addition of the OLED, I've implemented a few hardware bits differently:
