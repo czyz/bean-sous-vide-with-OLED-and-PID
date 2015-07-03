@@ -23,6 +23,7 @@ This branch adds the following features:
 ## Video
 I've posted [a video of the hardware side of things in action](https://vimeo.com/132490556). 
 
+## Hardware Implementation Details
 Apart from the changes to the Arduino and iOS app code and the addition of the OLED, I've implemented a few hardware bits differently:
 
 * The bean is running off a 3.3V/5V power supply I got for a couple bucks that looks a lot like [this one](http://www.amazon.com/Breadboard-Power-Supply-Module-Solderless/dp/B00BXWV2F6).
