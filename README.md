@@ -6,7 +6,7 @@
 *Above: The unfinished sous-vide machine with OLED display, cooking a steak while awaiting the next round of revisions*
 
 
-This is a branch of [mplewis's excellent "DIY Sous-Vide with Bean"](http://beantalk.punchthrough.com/t/sous-vide-with-bean-and-a-slow-cooker/483). It's basically a mashup of that project and [Bill Earl's Sous Vide powered by Arduino project at Adafruit](https://learn.adafruit.com/sous-vide-powered-by-arduino-the-sous-viduino/the-whole-enchilada)].  
+This is a branch of [mplewis's excellent "DIY Sous-Vide with Bean"](http://beantalk.punchthrough.com/t/sous-vide-with-bean-and-a-slow-cooker/483). It's basically a mashup of that project and [Bill Earl's Sous Vide powered by Arduino project at Adafruit](https://learn.adafruit.com/sous-vide-powered-by-arduino-the-sous-viduino/the-whole-enchilada).  
 
 This branch adds the following features:
 
