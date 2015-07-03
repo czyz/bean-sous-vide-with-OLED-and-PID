@@ -3,7 +3,7 @@
 
 [![Sous-vide components, all together](http://zachfine.com/dropzone/im/sous-vide.jpg)](http://zachfine.com/dropzone/im/sous-vide.jpg)
 
-*Above: The unfinished sous-vide machine with OLED display, cooking a steak while awwaiting the next round of revisions*
+*Above: The unfinished sous-vide machine with OLED display, cooking a steak while awaiting the next round of revisions*
 
 
 This is a branch of [mplewis's excellent "DIY Sous-Vide with Bean"](http://beantalk.punchthrough.com/t/sous-vide-with-bean-and-a-slow-cooker/483). I've added the following features to that project:
