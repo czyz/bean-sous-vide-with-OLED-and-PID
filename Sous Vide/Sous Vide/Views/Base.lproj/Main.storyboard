@@ -48,7 +48,7 @@
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4cL-gO-LYG">
                                         <rect key="frame" x="42" y="56" width="20" height="20"/>
                                     </activityIndicatorView>
-                                    <scrollView opaque="NO" clipsSubviews="YES" contentMode="left" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oxF-Uh-rGv">
+                                    <scrollView opaque="NO" clipsSubviews="YES" contentMode="left" fixedFrame="YES" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="oxF-Uh-rGv">
                                         <rect key="frame" x="20" y="81" width="320" height="236"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jtN-j0-okh">
@@ -125,19 +125,20 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Ki" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-uO-flf">
                                         <rect key="frame" x="189" y="510" width="56" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="next"/>
                                         <connections>
+                                            <action selector="editBeginKp:" destination="vXZ-lx-hvc" eventType="editingDidBegin" id="xNw-m8-Cgw"/>
                                             <action selector="editedKi:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="bic-CC-1QZ"/>
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Kp" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RgT-rw-6vN">
                                         <rect key="frame" x="114" y="510" width="53" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="next"/>
                                         <connections>
-                                            <action selector="asdf:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="wE5-kA-8iF"/>
                                             <action selector="editBeginKp:" destination="vXZ-lx-hvc" eventType="editingDidBegin" id="DBU-3J-H4w"/>
-                                            <action selector="editedKp:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="HYq-pU-XPH"/>
+                                            <action selector="editedKp:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="9yD-rb-0RN"/>
+                                            <action selector="test:" destination="vXZ-lx-hvc" eventType="touchDragInside" id="LuK-HS-fAm"/>
                                         </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Kd" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0X-F9-VBe">
@@ -148,9 +149,10 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Kd" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yp5-Df-GMi">
                                         <rect key="frame" x="269" y="510" width="56" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                                         <connections>
-                                            <action selector="editedKp:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="fAL-38-0iF"/>
+                                            <action selector="editBeginKp:" destination="vXZ-lx-hvc" eventType="editingDidBegin" id="nTR-Of-Bol"/>
+                                            <action selector="editedKd:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="yqn-8E-N6A"/>
                                         </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yeF-rh-WjE">

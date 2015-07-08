@@ -102,6 +102,10 @@
 
 @implementation SVViewController
 
+//for dismissing the keyboard as per http://stackoverflow.com/questions/5306240/iphone-dismiss-keyboard-when-touching-outside-of-uitextfield
+
+UIGestureRecognizer *tapper;
+
 // Called on load of the View.
 - (void)viewDidLoad
 {
@@ -110,20 +114,35 @@
     // Set up BeanManager
     self.beanManager = [[PTDBeanManager alloc] initWithDelegate:self];
     
-    
     // Clear program state
     [self reset];
+    
+    //for dismissing the keyboard as per http://stackoverflow.com/questions/5306240/iphone-dismiss-keyboard-when-touching-outside-of-uitextfield
+    
+    tapper = [[UITapGestureRecognizer alloc]
+              initWithTarget:self action:@selector(handleSingleTap:)];
+    tapper.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapper];
+
+    
 }
 
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+{
+    [self.view endEditing:YES];
+}
 
 /* Dismiss keyboard if background is touched as per step 3 at http://code.tutsplus.com/tutorials/ios-sdk-uitextfield-uitextfielddelegate--mobile-10943
-*/
+
  
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     NSLog(@"touchesBegan:withEvent:");
     [self.view endEditing:YES];
     [super touchesBegan:touches withEvent:event];
 }
+
+ */
+
 
 // Called when something happens to Bluetooth (turns on, turns off, etc).
 - (void)beanManagerDidUpdateState:(PTDBeanManager *)beanManager
@@ -510,31 +529,36 @@
     //scroll view up when keyboard appears
     //taken from answer "Just using text fields" at http://stackoverflow.com/questions/1126726/how-to-make-a-uitextfield-move-up-when-keyboard-is-present
 
-    
-    CGPoint scrollPoint = CGPointMake(0, self.pidKp.frame.origin.y);
+    //should really find the height of the keyboard, and then scroll the view that distance in y, rather than scrolling the uitextfield to the middle of the screen.
+    CGPoint scrollPoint = CGPointMake(0, self.pidKp.frame.origin.y/2);
     [self.mainScrollView setContentOffset:scrollPoint animated:YES];
 
     
 }
 
 
-- (IBAction)editedKp:(id)sender {
+
+
+- (IBAction)editedKp:(UITextField *)sender {
     
     //scroll view back into place after editing text field (not sure if this works
     //taken from answer "Just using text fields" at http://stackoverflow.com/questions/1126726/how-to-make-a-uitextfield-move-up-when-keyboard-is-present
     
-    [self setKp:[sender floatValue]];
     [self.mainScrollView setContentOffset:CGPointZero animated:YES];
-}
-
-- (IBAction)editedKi:(id)sender {
-    [self setKi:[sender floatValue]];
+    [self setKp:[sender.text floatValue]];
 
 }
 
-- (IBAction)editedKd:(id)sender {
-    [self setKd:[sender floatValue]];
+- (IBAction)editedKi:(UITextField *)sender {
+    [self.mainScrollView setContentOffset:CGPointZero animated:YES];
+    [self setKi:[sender.text floatValue]];
 
+}
+
+
+- (IBAction)editedKd:(UITextField *)sender {
+    [self.mainScrollView setContentOffset:CGPointZero animated:YES];
+    [self setKd:[sender.text floatValue]];
 }
 
 // Handle changes in the Cooking Enable switch.

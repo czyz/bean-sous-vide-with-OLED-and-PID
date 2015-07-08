@@ -36,8 +36,8 @@
 // Wait 5 seconds between checking temperature
 #define CONTROL_INTERVAL 10000
 
-// Default to starting at 120 F
-#define DEFAULT_TARGET_TEMP 120
+// Default to starting at 127 F -- lowest FDA safe temp (given long cooking time)
+#define DEFAULT_TARGET_TEMP 127
 
 
 // State variables
