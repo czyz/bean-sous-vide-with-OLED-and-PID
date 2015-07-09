@@ -38,15 +38,12 @@ Apart from the changes to the Arduino and iOS app code and the addition of the O
 ## iOS app known bugs:
 
 * If you happen to make setting changes via the app while the Bean is sending its status info, its setting will override your changes. Example: enable heating and sometimes the switch will toggle back to off as if by an unseen hand. Workaround: toggle the switch again. Solution: The app needs to recognize when incoming status messages will conflict with new settings and ignore them.
-* Trying to use the input fields for PID will crash the app.
-* The text fields only scroll out of the way of the keyboard when 'Kp' is edited, and they scroll further than necessary. Work in progress.
 * A large central portion of the information display (heating status icon, text, and current temperature) are in a uiscrollview and can be swiped left and right. The plan is to add a Page Control below this view, and be able to view a temperature graph as well as a page of additional statistics. Work in progress.
 * I haven't tested the app on anything but an iPhone 5S.
 
 ## Arduino app known bugs:
 
-* Autotune hasn't been tested.
-* Saving of PID values to EEPROM hasn't been tested.
+* I see that autotune eventually alters eeprom values for at least Kp and Ki, but I haven't had the patience to let it run until it completes (7+ hours and it was still going). It might be working fine, or it might result in nonsense values. 
 
 ## Xcode compilation difficulty || Git issue involving a missing “AppMessages.h”
 
