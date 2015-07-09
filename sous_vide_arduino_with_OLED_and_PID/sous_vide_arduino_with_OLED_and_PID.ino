@@ -389,6 +389,11 @@ void loop()
               strlcpy (heater_status, outstr, sizeof(heater_status));
               sendStrXY(heater_status,2,4); //
                          
+             // Re-tune the PID
+             myPID.SetTunings(Kp.floatingPoint,Ki.floatingPoint,Kd.floatingPoint);
+   
+             // Persist any changed parameters to EEPROM
+             SaveParameters();
             
             Serial.write(0x08);
             Serial.write(0xFF);
@@ -404,7 +409,13 @@ void loop()
               dtostrf(Ki.floatingPoint,7, 3, outstr);
               strlcpy (heater_status, outstr, sizeof(heater_status));
               sendStrXY(heater_status,2,4); //
-                         
+                        
+             // Re-tune the PID
+             myPID.SetTunings(Kp.floatingPoint,Ki.floatingPoint,Kd.floatingPoint);
+   
+             // Persist any changed parameters to EEPROM
+             SaveParameters();
+             
  
             Serial.write(0x09);
             Serial.write(0xFF);
@@ -417,8 +428,14 @@ void loop()
               dtostrf(Kd.floatingPoint,7, 3, outstr);
               strlcpy (heater_status, outstr, sizeof(heater_status));
               sendStrXY(heater_status,2,4); //
-                         
- 
+
+             // Re-tune the PID
+             myPID.SetTunings(Kp.floatingPoint,Ki.floatingPoint,Kd.floatingPoint);
+   
+             // Persist any changed parameters to EEPROM
+             SaveParameters();
+            
+             
             Serial.write(0x0A);
             Serial.write(0xFF);                                
 
