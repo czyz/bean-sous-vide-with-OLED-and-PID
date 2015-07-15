@@ -102,6 +102,9 @@
 
 @implementation SVViewController
 
+//do I need this?
+//@synthesize infoScrollView;
+
 //for dismissing the keyboard as per http://stackoverflow.com/questions/5306240/iphone-dismiss-keyboard-when-touching-outside-of-uitextfield
 
 UIGestureRecognizer *tapper;
@@ -132,29 +135,37 @@ UIGestureRecognizer *tapper;
     [self.view endEditing:YES];
 }
 
-/* Dismiss keyboard if background is touched as per step 3 at http://code.tutsplus.com/tutorials/ios-sdk-uitextfield-uitextfielddelegate--mobile-10943
-
- 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    NSLog(@"touchesBegan:withEvent:");
-    [self.view endEditing:YES];
-    [super touchesBegan:touches withEvent:event];
-}
-
- */
 
 
 // Called when something happens to Bluetooth (turns on, turns off, etc).
 - (void)beanManagerDidUpdateState:(PTDBeanManager *)beanManager
 {
+    
+    CGPoint scrollBannerPoint; //create point to use to scroll banner scrollview.
+    int layoutMargin = 20;
+    
     // Set Bluetooth status label and icon for the current Bluetooth state.
     if (self.beanManager.state == BeanManagerState_PoweredOn) {
         [self setBtStatus:@"Enabled" withIcon:ICON_CHECK];
+        
+        //bluetooth is enabled, scroll to show bean connectivity
+        scrollBannerPoint = CGPointMake(self.beanStatusSpinner.frame.origin.x - layoutMargin,0);
+        
     } else if (self.beanManager.state == BeanManagerState_PoweredOff) {
         [self setBtStatus:@"Disabled" withIcon:ICON_X];
+        
+                //bluetooth is disabled, scroll view to show bluetooth connectivity
+                scrollBannerPoint = CGPointMake(self.btStatusIcon.frame.origin.x - layoutMargin,0);
+        
     } else {
         [self setBtStatus:@"Unknown" withIcon:ICON_QUESTION];
+        
+        //bluetooth is disabled, scroll view to show bluetooth connectivity
+        scrollBannerPoint = CGPointMake(self.btStatusIcon.frame.origin.x - layoutMargin,0);
     }
+    
+    //scroll banner to show relevant info, bluetooth or bean connectivity
+    [self.BluetoothBeanConnectionBanner setContentOffset:scrollBannerPoint animated:YES];
     
     if (self.beanManager.state == BeanManagerState_PoweredOn) {
         // If Bluetooth is on, start scanning for beans.
@@ -203,6 +214,13 @@ UIGestureRecognizer *tapper;
     
     // Start sending update packets
     [self startUpdateRequests];
+    
+    
+    //scroll main view upward to hide the bluetooth and bean status banner (scroll upward exactly the height of the banner)
+    CGPoint scrollPoint = CGPointMake(0,self.BluetoothBeanConnectionBanner.frame.size.height);
+    
+    [self.mainScrollView setContentOffset:scrollPoint animated:YES];
+    
 }
 
 // Called when the sous vide Bean disconnects.
@@ -522,6 +540,55 @@ UIGestureRecognizer *tapper;
     [self setTargetTemp:[sender value]];
 }
 
+- (IBAction)mainInterfacePageChanged:(UIPageControl *)sender {
+
+    CGFloat pageWidth = self.mainScrollView.frame.size.width;
+    //set x point of scrollview to sender.value * width_of_page
+    
+    CGPoint scrollPoint = CGPointMake(sender.currentPage * pageWidth, 0);
+    [self.infoScrollView setContentOffset:scrollPoint animated:YES];
+}
+
+/*
+// from http://iosmadesimple.blogspot.com/2013/01/page-control-for-switching-between-views.html
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender
+{
+    // Update the page when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = self.scrollView.frame.size.width;
+    int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    self.pageControl.currentPage = page;
+}
+*/
+
+- (IBAction)infoScrollViewSwipeLeft:(UISwipeGestureRecognizer *)sender {
+
+    if (self.mainInfoPageControl.currentPage < 1) {
+        self.mainInfoPageControl.currentPage++;
+    }
+    
+    CGFloat pageWidth = self.mainScrollView.frame.size.width;
+    //set x point of scrollview to sender.value * width_of_page
+    CGPoint scrollPoint = CGPointMake(self.mainInfoPageControl.currentPage * pageWidth, 0);
+    [self.infoScrollView setContentOffset:scrollPoint animated:YES];
+
+    
+}
+
+- (IBAction)infoScrollViewSwipeRight:(UISwipeGestureRecognizer *)sender {
+
+    if (self.mainInfoPageControl.currentPage > 0) {
+        self.mainInfoPageControl.currentPage--;
+    }
+    
+    
+    CGFloat pageWidth = self.mainScrollView.frame.size.width;
+    //set x point of scrollview to sender.value * width_of_page
+    CGPoint scrollPoint = CGPointMake(self.mainInfoPageControl.currentPage * pageWidth, 0);
+    [self.infoScrollView setContentOffset:scrollPoint animated:YES];
+    
+}
+
 
 
 - (IBAction)editBeginKp:(id)sender {
@@ -601,6 +668,13 @@ UIGestureRecognizer *tapper;
 
     // Reset the state machine
     self.msgCurrentState = ST_READY;
+
+    //scroll main view downward to expose the bluetooth and bean status banner
+    CGPoint scrollPoint = CGPointMake(0,0);
+    
+    [self.mainScrollView setContentOffset:scrollPoint animated:YES];
+
+    
     
     // If Bluetooth is ready, start scanning again right away
     if (self.beanManager.state == BeanManagerState_PoweredOn) {

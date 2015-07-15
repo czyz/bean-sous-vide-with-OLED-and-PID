@@ -36,5 +36,15 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
 
+@property (strong, nonatomic) IBOutlet UIScrollView *infoScrollView;
+
+
+@property (weak, nonatomic) IBOutlet UIScrollView *BluetoothBeanConnectionBanner;
+
+
+@property (strong, nonatomic) IBOutlet UIPageControl *mainInterfacePage;
+
+@property (strong, nonatomic) IBOutlet UIPageControl *mainInfoPageControl;
+
 
 @end

@@ -18,21 +18,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w71-qM-Nlo">
-                                <rect key="frame" x="-20" y="20" width="360" height="560"/>
+                                <rect key="frame" x="-20" y="20" width="360" height="580"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="help.png" translatesAutoresizingMaskIntoConstraints="NO" id="9iU-dp-l8k">
-                                        <rect key="frame" x="40" y="20" width="25" height="25"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bluetooth: Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKW-ta-g2C">
-                                        <rect key="frame" x="73" y="22" width="247" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="help.png" translatesAutoresizingMaskIntoConstraints="NO" id="l92-a2-8t9">
-                                        <rect key="frame" x="40" y="53" width="25" height="25"/>
-                                    </imageView>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="106" minValue="0.0" maxValue="212" translatesAutoresizingMaskIntoConstraints="NO" id="wYG-Zm-iaH">
-                                        <rect key="frame" x="38" y="403" width="144" height="31"/>
+                                        <rect key="frame" x="38" y="390" width="144" height="31"/>
                                         <connections>
                                             <action selector="targetTempChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="v79-rB-Bc6"/>
                                             <action selector="targetTempDown:" destination="vXZ-lx-hvc" eventType="touchDown" id="R1y-t5-gcx"/>
@@ -41,32 +30,42 @@
                                         </connections>
                                     </slider>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Target Temperature" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yCf-yg-ZGs">
-                                        <rect key="frame" x="40" y="321" width="140" height="21"/>
+                                        <rect key="frame" x="40" y="308" width="140" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4cL-gO-LYG">
-                                        <rect key="frame" x="42" y="56" width="20" height="20"/>
-                                    </activityIndicatorView>
-                                    <scrollView opaque="NO" clipsSubviews="YES" contentMode="left" fixedFrame="YES" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="oxF-Uh-rGv">
-                                        <rect key="frame" x="20" y="81" width="320" height="236"/>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="aJU-0g-0VY" userLabel="mainInfoPageControl">
+                                        <rect key="frame" x="161" y="271" width="39" height="37"/>
+                                        <color key="pageIndicatorTintColor" red="0.8584083017676768" green="0.8584083017676768" blue="0.8584083017676768" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="currentPageIndicatorTintColor" red="0.53424873737373735" green="0.53424873737373735" blue="0.53424873737373735" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="mainInterfacePageChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="hF2-pR-RlE"/>
+                                        </connections>
+                                    </pageControl>
+                                    <scrollView opaque="NO" clipsSubviews="YES" contentMode="left" fixedFrame="YES" scrollEnabled="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="oxF-Uh-rGv" userLabel="infoScrollView">
+                                        <rect key="frame" x="20" y="41" width="320" height="236"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jtN-j0-okh">
-                                                <rect key="frame" x="0.0" y="0.0" width="640" height="128"/>
+                                                <rect key="frame" x="0.0" y="6" width="640" height="230"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hot.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ee9-Gw-Wju">
-                                                        <rect key="frame" x="117" y="3" width="117" height="117"/>
+                                                        <rect key="frame" x="104" y="3" width="117" height="117"/>
                                                     </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <gestureRecognizers/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="NJ6-RZ-wb5" appends="YES" id="iBD-Iv-FfA"/>
+                                                    <outletCollection property="gestureRecognizers" destination="F19-K0-rcZ" appends="YES" id="DHq-MF-T9t"/>
+                                                </connections>
                                             </view>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="165° F" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwg-mr-Gbk">
-                                                <rect key="frame" x="0.0" y="121" width="320" height="68"/>
+                                                <rect key="frame" x="0.0" y="127" width="320" height="68"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="44"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Heating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZG-Rr-4vY">
-                                                <rect key="frame" x="0.0" y="167" width="320" height="68"/>
+                                                <rect key="frame" x="0.0" y="173" width="320" height="68"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="44"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -76,45 +75,43 @@
                                                 <size key="value" width="720" height="128"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="vXZ-lx-hvc" id="iSh-Tl-ous"/>
+                                        </connections>
                                     </scrollView>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i2T-hK-n1l">
-                                        <rect key="frame" x="271" y="403" width="51" height="31"/>
+                                        <rect key="frame" x="271" y="390" width="51" height="31"/>
                                         <connections>
                                             <action selector="enableSwitchChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="Z6l-rQ-zGh"/>
                                         </connections>
                                     </switch>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bean: Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Dm-yu-00F">
-                                        <rect key="frame" x="73" y="55" width="191" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="451° F" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xvw-xa-m9W">
-                                        <rect key="frame" x="40" y="333" width="140" height="68"/>
+                                        <rect key="frame" x="40" y="320" width="140" height="68"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="48"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cooking" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vIV-Uy-YcH">
-                                        <rect key="frame" x="180" y="321" width="140" height="21"/>
+                                        <rect key="frame" x="180" y="308" width="140" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yes" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIf-gD-8W4">
-                                        <rect key="frame" x="180" y="333" width="140" height="68"/>
+                                        <rect key="frame" x="180" y="320" width="140" height="68"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="48"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ki" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hU-iu-sOk">
-                                        <rect key="frame" x="189" y="481" width="32" height="21"/>
+                                        <rect key="frame" x="189" y="507" width="32" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Kp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXk-92-Nlz">
-                                        <rect key="frame" x="114" y="481" width="32" height="21"/>
+                                        <rect key="frame" x="114" y="507" width="32" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7I6-ow-KDm">
-                                        <rect key="frame" x="36" y="510" width="61" height="30"/>
+                                        <rect key="frame" x="36" y="536" width="61" height="30"/>
                                         <state key="normal" title="autotune">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -123,7 +120,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Ki" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-uO-flf">
-                                        <rect key="frame" x="189" y="510" width="56" height="30"/>
+                                        <rect key="frame" x="189" y="536" width="56" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="next"/>
                                         <connections>
@@ -132,7 +129,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Kp" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RgT-rw-6vN">
-                                        <rect key="frame" x="114" y="510" width="53" height="30"/>
+                                        <rect key="frame" x="114" y="536" width="53" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="next"/>
                                         <connections>
@@ -142,12 +139,12 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Kd" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0X-F9-VBe">
-                                        <rect key="frame" x="269" y="481" width="32" height="21"/>
+                                        <rect key="frame" x="269" y="507" width="32" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Kd" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yp5-Df-GMi">
-                                        <rect key="frame" x="269" y="510" width="56" height="30"/>
+                                        <rect key="frame" x="269" y="536" width="56" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                                         <connections>
@@ -156,22 +153,47 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yeF-rh-WjE">
-                                        <rect key="frame" x="36" y="481" width="32" height="21"/>
+                                        <rect key="frame" x="36" y="507" width="32" height="21"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" continuous="NO" maximumValue="212" translatesAutoresizingMaskIntoConstraints="NO" id="5lR-M8-lh3">
-                                        <rect key="frame" x="63" y="444" width="94" height="29"/>
+                                        <rect key="frame" x="63" y="441" width="94" height="29"/>
                                         <connections>
                                             <action selector="targetTempUpStepper:" destination="vXZ-lx-hvc" eventType="valueChanged" id="0WR-Z0-eqC"/>
                                         </connections>
                                     </stepper>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcr-f6-6TS">
+                                        <rect key="frame" x="20" y="0.0" width="640" height="33"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="help.png" translatesAutoresizingMaskIntoConstraints="NO" id="l92-a2-8t9">
+                                                <rect key="frame" x="373" y="4" width="25" height="25"/>
+                                            </imageView>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4cL-gO-LYG">
+                                                <rect key="frame" x="375" y="7" width="20" height="20"/>
+                                            </activityIndicatorView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bean: Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Dm-yu-00F">
+                                                <rect key="frame" x="406" y="6" width="191" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="help.png" translatesAutoresizingMaskIntoConstraints="NO" id="9iU-dp-l8k">
+                                                <rect key="frame" x="65" y="4" width="25" height="25"/>
+                                            </imageView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bluetooth: Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKW-ta-g2C">
+                                                <rect key="frame" x="98" y="6" width="247" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </scrollView>
                                 </subviews>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="BluetoothBeanConnectionBanner" destination="jcr-f6-6TS" id="fWB-md-RPD"/>
                         <outlet property="beanStatusIcon" destination="l92-a2-8t9" id="UW6-2i-yes"/>
                         <outlet property="beanStatusLabel" destination="9Dm-yu-00F" id="Oa2-Hg-utB"/>
                         <outlet property="beanStatusSpinner" destination="4cL-gO-LYG" id="qBq-DW-j3V"/>
@@ -181,6 +203,9 @@
                         <outlet property="cookingSwitch" destination="i2T-hK-n1l" id="Scl-Ir-c18"/>
                         <outlet property="heatingIcon" destination="Ee9-Gw-Wju" id="UgH-Dh-FFT"/>
                         <outlet property="heatingLabel" destination="fZG-Rr-4vY" id="7rp-gN-Cvx"/>
+                        <outlet property="infoScrollView" destination="oxF-Uh-rGv" id="x7R-Fu-Ebh"/>
+                        <outlet property="mainInfoPageControl" destination="aJU-0g-0VY" id="xU9-m3-H2w"/>
+                        <outlet property="mainInterfacePage" destination="aJU-0g-0VY" id="YRo-0d-FKS"/>
                         <outlet property="mainScrollView" destination="w71-qM-Nlo" id="dBO-Tg-RsB"/>
                         <outlet property="pidKd" destination="yp5-Df-GMi" id="sTR-gh-ebf"/>
                         <outlet property="pidKi" destination="LKr-uO-flf" id="oPD-d3-4VU"/>
@@ -192,6 +217,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="NJ6-RZ-wb5">
+                    <connections>
+                        <action selector="infoScrollViewSwipeLeft:" destination="vXZ-lx-hvc" id="GIS-4n-ryx"/>
+                        <outlet property="delegate" destination="oxF-Uh-rGv" id="A85-7m-5f5"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="F19-K0-rcZ">
+                    <connections>
+                        <action selector="infoScrollViewSwipeRight:" destination="vXZ-lx-hvc" id="Xdp-k5-0VP"/>
+                        <outlet property="delegate" destination="oxF-Uh-rGv" id="fGD-7X-oQ0"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
         </scene>
     </scenes>
