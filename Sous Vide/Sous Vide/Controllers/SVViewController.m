@@ -102,9 +102,6 @@
 
 @implementation SVViewController
 
-//do I need this?
-//@synthesize infoScrollView;
-
 //for dismissing the keyboard as per http://stackoverflow.com/questions/5306240/iphone-dismiss-keyboard-when-touching-outside-of-uitextfield
 
 UIGestureRecognizer *tapper;
@@ -126,9 +123,104 @@ UIGestureRecognizer *tapper;
               initWithTarget:self action:@selector(handleSingleTap:)];
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
+    
+    
+    //core plot graph stuff adapted from http://www.mobdevel.com/?p=96
+    // Create a CPTGraph object and add to hostView
+    CPTGraph* graph = [[CPTXYGraph alloc] initWithFrame:self.GraphHostView.bounds];
+    self.GraphHostView.hostedGraph = graph;
 
     
+    NSMutableArray *tempHistory = [NSMutableArray arrayWithCapacity:1];
+    self.GraphHostView.tempHistory = tempHistory;
+    //let's pre-fill the temperature history array just to test it
+
+    int indexy;
+    for (indexy = 0; indexy < 9; indexy++) {
+        
+     
+        
+        
+        [self.GraphHostView.tempHistory
+         addObject:@[
+                     [NSNumber numberWithDouble:NSDate.date.timeIntervalSince1970+(indexy*5)],
+                     [NSNumber numberWithFloat:(indexy*5*arc4random_uniform(10))]]
+         ];
+
+        
+    }
+    NSLog(@"%@", self.GraphHostView.tempHistory);
+
+    
+    
+    // Get the (default) plotspace from the graph so we can set its x/y ranges
+    //CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
+    
+    // Note that these CPTPlotRange are defined by START and LENGTH (not START and END) !!
+    //[plotSpace setYRange: [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat( 0 ) length:CPTDecimalFromFloat( 80 )]];
+    
+//    [plotSpace setXRange: [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat( -2 ) length:CPTDecimalFromFloat( 10 )]];
+   //[plotSpace setXRange: [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat( [[[self.GraphHostView.tempHistory objectAtIndex:0] objectAtIndex:0] floatValue] - 10 ) length:CPTDecimalFromFloat( 100 )]];
+   // NSLog(@"first x value: %@",[[self.GraphHostView.tempHistory objectAtIndex:0] objectAtIndex:0]);
+    
+   
+    
+    // Create the plot (we do not define actual x/y values yet, these will be supplied by the datasource...)
+    //CPTScatterPlot* plot = [[CPTScatterPlot alloc] initWithFrame:CGRectZero];
+    CPTScatterPlot* plot = [[CPTScatterPlot alloc] initWithFrame:self.GraphHostView.frame];
+    
+    // Let's keep it simple and let this class act as datasource (therefore we implemtn <CPTPlotDataSource>)
+    plot.dataSource = self.GraphHostView;
+
+    graph.plotAreaFrame.paddingTop    = 20.0;
+    graph.plotAreaFrame.paddingBottom = 35.0;
+    graph.plotAreaFrame.paddingLeft   = 50.0;
+    graph.plotAreaFrame.paddingRight  = 20.0;
+    
+    // style the graph with white text and lines
+    
+    CPTMutableTextStyle *graphText = [CPTMutableTextStyle textStyle];
+    graphText.color = [CPTColor blackColor];
+    CPTMutableLineStyle *graphStyle = [CPTMutableLineStyle lineStyle];
+    graphStyle.lineColor = [CPTColor blackColor];
+    graphStyle.lineWidth = 2.0f;
+    
+    // set up the axis
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
+    CPTXYAxis *x = axisSet.xAxis;
+    CPTXYAxis *y = axisSet.yAxis;
+    //x.majorIntervalLength = CPTDecimalFromFloat(maxDistance/10.0f);
+    x.majorIntervalLength = CPTDecimalFromFloat(5.0);
+    x.minorTicksPerInterval = 3;
+    x.majorTickLineStyle = graphStyle;
+    x.minorTickLineStyle = graphStyle;
+    x.axisLineStyle = graphStyle;
+    x.minorTickLength = 5.0f;
+    x.majorTickLength = 10.0f;
+    x.labelOffset = 3.0f;
+    x.labelTextStyle = graphText;
+    y.majorIntervalLength = CPTDecimalFromFloat(50);
+    y.minorTicksPerInterval = 3;
+    y.majorTickLineStyle = graphStyle;
+    y.minorTickLineStyle = graphStyle;
+    y.axisLineStyle = graphStyle;
+    y.minorTickLength = 5.0f;
+    y.majorTickLength = 10.0f;
+    y.labelOffset = 3.0f;
+    y.labelTextStyle = graphText;
+    
+    
+     //graph.plotAreaFrame.masksToBorder = NO;
+    
+    // Finally, add the created plot to the default plot space of the CPTGraph object we created before
+    [graph addPlot:plot toPlotSpace:graph.defaultPlotSpace];
+
+    [graph.defaultPlotSpace scaleToFitPlots:[graph allPlots]];
+    
 }
+
+
+
 
 - (void)handleSingleTap:(UITapGestureRecognizer *) sender
 {
@@ -346,6 +438,15 @@ UIGestureRecognizer *tapper;
                               pidKivalue:self.msgKi
                               pidKdvalue:self.msgKd
              ];
+            
+            
+            [self.GraphHostView.tempHistory
+             addObject:@[
+                [NSNumber numberWithDouble:NSDate.date.timeIntervalSince1970],
+                [NSNumber numberWithFloat:self.msgCurrentTemp]]
+             ];
+
+            
         }
         self.msgCurrentState = ST_READY;
     }
@@ -588,6 +689,11 @@ UIGestureRecognizer *tapper;
     [self.infoScrollView setContentOffset:scrollPoint animated:YES];
     
 }
+
+
+
+
+
 
 
 

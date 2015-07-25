@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <PTDBeanManager.h>
 
+
+//#import "CorePlot-CocoaTouch.h"
+#import "SVCorePlotGraphHostingView.h"
+
+
+
 @interface SVViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIImageView *btStatusIcon;
@@ -45,6 +51,8 @@
 @property (strong, nonatomic) IBOutlet UIPageControl *mainInterfacePage;
 
 @property (strong, nonatomic) IBOutlet UIPageControl *mainInfoPageControl;
+
+@property (strong, nonatomic) IBOutlet SVCorePlotGraphHostingView *GraphHostView;
 
 
 @end

@@ -36,6 +36,9 @@
 		36860720195387E400FC4A64 /* hot~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3686071F195387E400FC4A64 /* hot~iphone.png */; };
 		36860722195387EF00FC4A64 /* cool~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 36860721195387EF00FC4A64 /* cool~iphone.png */; };
 		B13521D31B44C3DD00CF4CEA /* libBean iOS Library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B13521D21B44C3DD00CF4CEA /* libBean iOS Library.a */; };
+		B165AFE41B573B6F0071EC07 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B165AFE11B573B420071EC07 /* libCorePlot-CocoaTouch.a */; };
+		B165AFE61B573D6A0071EC07 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B165AFE51B573D6A0071EC07 /* Accelerate.framework */; };
+		B165AFF41B59C4860071EC07 /* SVCorePlotGraphHostingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B165AFF31B59C4860071EC07 /* SVCorePlotGraphHostingView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +48,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 368606C719537A9900FC4A64;
 			remoteInfo = "Sous Vide";
+		};
+		B165AFE01B573B420071EC07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B165AFDA1B573B420071EC07 /* CorePlot-CocoaTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BC9B83470FB8A0A40035D8DA;
+			remoteInfo = "CorePlot-CocoaTouch";
+		};
+		B165AFE21B573B580071EC07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B165AFDA1B573B420071EC07 /* CorePlot-CocoaTouch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BC9B83460FB8A0A40035D8DA;
+			remoteInfo = "CorePlot-CocoaTouch";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -83,6 +100,10 @@
 		3686071F195387E400FC4A64 /* hot~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hot~iphone.png"; sourceTree = "<group>"; };
 		36860721195387EF00FC4A64 /* cool~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cool~iphone.png"; sourceTree = "<group>"; };
 		B13521D21B44C3DD00CF4CEA /* libBean iOS Library.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libBean iOS Library.a"; sourceTree = "<group>"; };
+		B165AFDA1B573B420071EC07 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "../coreplot/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
+		B165AFE51B573D6A0071EC07 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		B165AFF21B59C4860071EC07 /* SVCorePlotGraphHostingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCorePlotGraphHostingView.h; sourceTree = "<group>"; };
+		B165AFF31B59C4860071EC07 /* SVCorePlotGraphHostingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVCorePlotGraphHostingView.m; sourceTree = "<group>"; };
 		B168B5C61AF761B1005AAEF7 /* PTDBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTDBean.h; sourceTree = "<group>"; };
 		B168B5C71AF761B1005AAEF7 /* PTDBeanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTDBeanManager.h; sourceTree = "<group>"; };
 		B168B5C81AF761B1005AAEF7 /* PTDBeanRadioConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTDBeanRadioConfig.h; sourceTree = "<group>"; };
@@ -94,10 +115,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B165AFE61B573D6A0071EC07 /* Accelerate.framework in Frameworks */,
 				368606CE19537A9900FC4A64 /* CoreGraphics.framework in Frameworks */,
 				B13521D31B44C3DD00CF4CEA /* libBean iOS Library.a in Frameworks */,
 				368606D019537A9900FC4A64 /* UIKit.framework in Frameworks */,
 				368606CC19537A9900FC4A64 /* Foundation.framework in Frameworks */,
+				B165AFE41B573B6F0071EC07 /* libCorePlot-CocoaTouch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +140,7 @@
 		368606BF19537A9900FC4A64 = {
 			isa = PBXGroup;
 			children = (
+				B165AFDA1B573B420071EC07 /* CorePlot-CocoaTouch.xcodeproj */,
 				368606D119537A9900FC4A64 /* Sous Vide */,
 				368606F019537A9900FC4A64 /* Sous VideTests */,
 				368606CA19537A9900FC4A64 /* Frameworks */,
@@ -136,6 +160,7 @@
 		368606CA19537A9900FC4A64 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B165AFE51B573D6A0071EC07 /* Accelerate.framework */,
 				B13521D21B44C3DD00CF4CEA /* libBean iOS Library.a */,
 				B168B5C61AF761B1005AAEF7 /* PTDBean.h */,
 				B168B5C71AF761B1005AAEF7 /* PTDBeanManager.h */,
@@ -213,6 +238,8 @@
 			isa = PBXGroup;
 			children = (
 				368606DD19537A9900FC4A64 /* Main.storyboard */,
+				B165AFF21B59C4860071EC07 /* SVCorePlotGraphHostingView.h */,
+				B165AFF31B59C4860071EC07 /* SVCorePlotGraphHostingView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,6 +273,14 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		B165AFDB1B573B420071EC07 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B165AFE11B573B420071EC07 /* libCorePlot-CocoaTouch.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -260,6 +295,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B165AFE31B573B580071EC07 /* PBXTargetDependency */,
 			);
 			name = "Sous Vide";
 			productName = "Sous Vide";
@@ -310,6 +346,12 @@
 			mainGroup = 368606BF19537A9900FC4A64;
 			productRefGroup = 368606C919537A9900FC4A64 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B165AFDB1B573B420071EC07 /* Products */;
+					ProjectRef = B165AFDA1B573B420071EC07 /* CorePlot-CocoaTouch.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				368606C719537A9900FC4A64 /* Sous Vide */,
@@ -317,6 +359,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B165AFE11B573B420071EC07 /* libCorePlot-CocoaTouch.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libCorePlot-CocoaTouch.a";
+			remoteRef = B165AFE01B573B420071EC07 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		368606C619537A9900FC4A64 /* Resources */ = {
@@ -359,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				368606E219537A9900FC4A64 /* SVViewController.m in Sources */,
+				B165AFF41B59C4860071EC07 /* SVCorePlotGraphHostingView.m in Sources */,
 				368606D819537A9900FC4A64 /* main.m in Sources */,
 				368606DC19537A9900FC4A64 /* SVAppDelegate.m in Sources */,
 			);
@@ -379,6 +432,11 @@
 			isa = PBXTargetDependency;
 			target = 368606C719537A9900FC4A64 /* Sous Vide */;
 			targetProxy = 368606EE19537A9900FC4A64 /* PBXContainerItemProxy */;
+		};
+		B165AFE31B573B580071EC07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CorePlot-CocoaTouch";
+			targetProxy = B165AFE21B573B580071EC07 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -491,6 +549,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../Bean-iOS-OSX-SDK/source/Public",
+					"$(SRCROOT)/../coreplot/framework/**",
 				);
 				INFOPLIST_FILE = "Sous Vide/Supporting Files/Sous Vide-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -498,6 +557,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Sous_Vide-cwowgeqvqcfvnjffdiartlwcqxls/Build/Products/Debug",
 					"$(PROJECT_DIR)",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -514,6 +574,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../Bean-iOS-OSX-SDK/source/Public",
+					"$(SRCROOT)/../coreplot/framework/**",
 				);
 				INFOPLIST_FILE = "Sous Vide/Supporting Files/Sous Vide-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -521,6 +582,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Sous_Vide-cwowgeqvqcfvnjffdiartlwcqxls/Build/Products/Debug",
 					"$(PROJECT_DIR)",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

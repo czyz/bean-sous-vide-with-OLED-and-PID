@@ -1,3 +1,6 @@
 [submodule "Bean-iOS-OSX-SDK"]
 	path = Bean-iOS-OSX-SDK
 	url = https://github.com/PunchThrough/Bean-iOS-OSX-SDK.git
+[submodule "coreplot"]
+	path = coreplot
+	url = https://github.com/core-plot/core-plot.git

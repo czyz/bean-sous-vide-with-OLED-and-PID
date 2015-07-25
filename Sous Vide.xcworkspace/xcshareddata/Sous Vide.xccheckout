@@ -14,6 +14,8 @@
 		<string>https://bitbucket.org/punchthroughdesign/bean-application-message-definitions.git</string>
 		<key>4E972D5D7D21C90D5F21CCCB7813586DCADDD8A1</key>
 		<string>https://github.com/PunchThrough/Bean-iOS-OSX-SDK.git</string>
+		<key>8B3D884E5CB77CFCF2CE65E14C999AAC1DC843A5</key>
+		<string>https://github.com/core-plot/core-plot.git</string>
 		<key>AF979956FB35F04B8EFE81ECBE488B38E36C8EE9</key>
 		<string>https://github.com/czyz/bean-sous-vide-with-OLED-and-PID.git</string>
 	</dict>
@@ -25,6 +27,8 @@
 		<string>../Bean-iOS-OSX-SDK/App%20Message%20Definitions</string>
 		<key>4E972D5D7D21C90D5F21CCCB7813586DCADDD8A1</key>
 		<string>..Bean-iOS-OSX-SDK</string>
+		<key>8B3D884E5CB77CFCF2CE65E14C999AAC1DC843A5</key>
+		<string>../coreplot</string>
 		<key>AF979956FB35F04B8EFE81ECBE488B38E36C8EE9</key>
 		<string>..</string>
 	</dict>
@@ -59,6 +63,14 @@
 			<string>4E972D5D7D21C90D5F21CCCB7813586DCADDD8A1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>bean-sous-vide-with-OLED-and-PIDBean-iOS-OSX-SDK</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8B3D884E5CB77CFCF2CE65E14C999AAC1DC843A5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>coreplot</string>
 		</dict>
 	</array>
 </dict>
