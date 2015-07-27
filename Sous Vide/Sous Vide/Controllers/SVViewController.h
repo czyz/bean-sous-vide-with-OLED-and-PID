@@ -25,6 +25,10 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *heatingIcon;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *tempLabel2;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *heatingLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *targetTempLabel;

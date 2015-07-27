@@ -151,6 +151,12 @@
                                                         <rect key="frame" x="360" y="0.0" width="320" height="230"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="166° F" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIo-MU-8m8">
+                                                        <rect key="frame" x="360" y="52" width="320" height="68"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="47"/>
+                                                        <color key="textColor" red="0.85619870580808077" green="0.85619870580808077" blue="0.85619870580808077" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <gestureRecognizers/>
@@ -219,6 +225,7 @@
                         <outlet property="targetTempSlider" destination="wYG-Zm-iaH" id="Cti-1X-uMr"/>
                         <outlet property="targetTempStepper" destination="5lR-M8-lh3" id="LmC-DL-tOX"/>
                         <outlet property="tempLabel" destination="cwg-mr-Gbk" id="qa6-M7-eBi"/>
+                        <outlet property="tempLabel2" destination="ZIo-MU-8m8" id="fwh-LX-Ge8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

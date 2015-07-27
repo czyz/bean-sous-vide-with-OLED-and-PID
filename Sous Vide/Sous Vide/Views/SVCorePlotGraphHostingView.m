@@ -45,13 +45,31 @@
 // This method is here because this class also functions as datasource for our graph
 // Therefore this class implements the CPTPlotDataSource protocol
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plotnumberOfRecords {
-    return (int)[self.tempHistory count];
+    int num_bogus_records = 9;
+    int num_records_in_tempHistory = (int)[self.tempHistory count];
+    
+    //this is really dumb. But for the purposes of incorporating coreplot I need to be able to test the graph display even when the app is not connected to the lightblue bean and receiving actual data, so the tempHistory array has been preloaded with 9 random records. So… if there's more than 9 records, that means we've got actual data to display and should ignore the first 9 bogus records.
+    
+    if (num_records_in_tempHistory == num_bogus_records) {
+        return num_records_in_tempHistory;
+    } else {
+        return num_records_in_tempHistory - 9;
+    }
 }
 
 // This method is here because this class also functions as datasource for our graph
 // Therefore this class implements the CPTPlotDataSource protocol
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
+    
+    //As in numberOfRecordsForPlot, here's some logic to remove the first 9 bogus records in tempHistory from the graph, if we've got actual data from the lightblue bean to display.
+    
+    if ( (int)[self.tempHistory count] > 9) { //is the cast to int necessary here? Should test and remove if not necessary
+        
+        index += 9; //adjust the index value to skip over the first 9 records, if there's actual data to plot rather than the random bogus data placed in the first 9 records of the array.
+    
+    }
+    
     // This method is actually called twice per point in the plot, one for the X and one for the Y value
     if(fieldEnum == CPTScatterPlotFieldX)
     {

@@ -143,13 +143,15 @@ UIGestureRecognizer *tapper;
         
         [self.GraphHostView.tempHistory
          addObject:@[
-                     [NSNumber numberWithDouble:NSDate.date.timeIntervalSince1970+(indexy*5)],
-                     [NSNumber numberWithFloat:(indexy*5*arc4random_uniform(10))]]
+                     [NSNumber numberWithDouble:NSDate.date.timeIntervalSince1970+(indexy)],
+                     [NSNumber numberWithFloat:((indexy*arc4random_uniform(2))+129)]]
          ];
 
         
     }
-    NSLog(@"%@", self.GraphHostView.tempHistory);
+    
+    
+    //NSLog(@"%@", self.GraphHostView.tempHistory);
 
     
     
@@ -177,6 +179,12 @@ UIGestureRecognizer *tapper;
     graph.plotAreaFrame.paddingLeft   = 50.0;
     graph.plotAreaFrame.paddingRight  = 20.0;
     
+    //Controls padding between frame and graph (graph is wrapper)
+    graph.paddingLeft = 0.0;
+    graph.paddingTop = 0.0;
+    graph.paddingRight = 0.0;
+    graph.paddingBottom = 20.0;
+    
     // style the graph with white text and lines
     
     CPTMutableTextStyle *graphText = [CPTMutableTextStyle textStyle];
@@ -189,25 +197,40 @@ UIGestureRecognizer *tapper;
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
     CPTXYAxis *x = axisSet.xAxis;
     CPTXYAxis *y = axisSet.yAxis;
+    //y.orthogonalCoordinateDecimal = CPTDecimalFromFloat(self.GraphHostView.tempHistory);
     //x.majorIntervalLength = CPTDecimalFromFloat(maxDistance/10.0f);
-    x.majorIntervalLength = CPTDecimalFromFloat(5.0);
-    x.minorTicksPerInterval = 3;
+    x.axisConstraints = [CPTConstraints constraintWithLowerOffset:0.0];
+    y.axisConstraints = [CPTConstraints constraintWithLowerOffset:0.0];
+    
+    x.labelingPolicy = CPTAxisLabelingPolicyEqualDivisions;
+    x.preferredNumberOfMajorTicks = 5;
+    //x.majorIntervalLength = CPTDecimalFromFloat(60.0);
+    x.minorTicksPerInterval = 6;
     x.majorTickLineStyle = graphStyle;
     x.minorTickLineStyle = graphStyle;
     x.axisLineStyle = graphStyle;
-    x.minorTickLength = 5.0f;
-    x.majorTickLength = 10.0f;
+    x.minorTickLength = 1.0f;
+    x.majorTickLength = 3.0f;
     x.labelOffset = 3.0f;
     x.labelTextStyle = graphText;
-    y.majorIntervalLength = CPTDecimalFromFloat(50);
+    
+    y.labelingPolicy = CPTAxisLabelingPolicyEqualDivisions;
+    y.preferredNumberOfMajorTicks = 10;
+    //y.majorIntervalLength = CPTDecimalFromFloat(5);
     y.minorTicksPerInterval = 3;
     y.majorTickLineStyle = graphStyle;
     y.minorTickLineStyle = graphStyle;
     y.axisLineStyle = graphStyle;
-    y.minorTickLength = 5.0f;
-    y.majorTickLength = 10.0f;
+    y.minorTickLength = 1.0f;
+    y.majorTickLength = 3.0f;
     y.labelOffset = 3.0f;
     y.labelTextStyle = graphText;
+    
+    CPTPlotSymbol *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol]; // Ellipse is used for circles
+    plotSymbol.fill = [CPTFill fillWithColor:[CPTColor blueColor]];
+    plotSymbol.size = CGSizeMake(3.0, 3.0);
+    
+    plot.plotSymbol = plotSymbol;
     
     
      //graph.plotAreaFrame.masksToBorder = NO;
@@ -215,6 +238,11 @@ UIGestureRecognizer *tapper;
     // Finally, add the created plot to the default plot space of the CPTGraph object we created before
     [graph addPlot:plot toPlotSpace:graph.defaultPlotSpace];
 
+    //[graph.defaultPlotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromCGFloat(yMin) length:CPTDecimalFromCGFloat(yMax - yMin)] ];
+    
+    CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
+    plotSpace.allowsUserInteraction = YES;
+    
     [graph.defaultPlotSpace scaleToFitPlots:[graph allPlots]];
     
 }
@@ -445,7 +473,9 @@ UIGestureRecognizer *tapper;
                 [NSNumber numberWithDouble:NSDate.date.timeIntervalSince1970],
                 [NSNumber numberWithFloat:self.msgCurrentTemp]]
              ];
-
+            
+            [self.GraphHostView.hostedGraph.defaultPlotSpace scaleToFitPlots:[self.GraphHostView.hostedGraph allPlots]];
+            [self.GraphHostView.hostedGraph reloadData];
             
         }
         self.msgCurrentState = ST_READY;
@@ -495,6 +525,8 @@ UIGestureRecognizer *tapper;
 - (void)showTemp:(float)temp
 {
     [self.tempLabel setText:[NSString stringWithFormat:@"%0.2f° F", temp]];
+    [self.tempLabel2 setText:[NSString stringWithFormat:@"%0.2f° F", temp]];
+
 }
 
 // Display the Kp tune setting
@@ -553,6 +585,8 @@ UIGestureRecognizer *tapper;
 {
     self.heatingIcon.alpha = ALPHA_OPAQUE;
     self.tempLabel.alpha = ALPHA_OPAQUE;
+    self.tempLabel2.alpha = ALPHA_OPAQUE;
+    
     self.heatingLabel.alpha = ALPHA_OPAQUE;
     self.targetTempLabel.alpha = ALPHA_OPAQUE;
     self.cookingLabel.alpha = ALPHA_OPAQUE;
@@ -587,6 +621,7 @@ UIGestureRecognizer *tapper;
 {
     self.heatingIcon.alpha = ALPHA_FADED;
     self.tempLabel.alpha = ALPHA_FADED;
+    self.tempLabel2.alpha = ALPHA_FADED;
     self.heatingLabel.alpha = ALPHA_FADED;
     self.targetTempLabel.alpha = ALPHA_FADED;
     self.cookingLabel.alpha = ALPHA_FADED;
@@ -598,6 +633,7 @@ UIGestureRecognizer *tapper;
     
     [self.heatingIcon setImage:[UIImage imageNamed:ICON_QUESTION_LG]];
     [self.tempLabel setText:@"?° F"];
+    [self.tempLabel2 setText:@"?° F"];
     [self.heatingLabel setText:@"Unknown"];
     [self.targetTempLabel setText:@"?° F"];
     [self.cookingLabel setText:@"?"];
@@ -717,20 +753,37 @@ UIGestureRecognizer *tapper;
     //scroll view back into place after editing text field (not sure if this works
     //taken from answer "Just using text fields" at http://stackoverflow.com/questions/1126726/how-to-make-a-uitextfield-move-up-when-keyboard-is-present
     
-    [self.mainScrollView setContentOffset:CGPointZero animated:YES];
+    
+    //scroll main view back down, but not so far that it shows the bluetooth and bean status banner
+    CGPoint scrollPoint = CGPointMake(0,self.BluetoothBeanConnectionBanner.frame.size.height);
+    [self.mainScrollView setContentOffset:scrollPoint animated:YES];
+    
+    
+    //[self.mainScrollView setContentOffset:CGPointZero animated:YES];
     [self setKp:[sender.text floatValue]];
 
 }
 
 - (IBAction)editedKi:(UITextField *)sender {
-    [self.mainScrollView setContentOffset:CGPointZero animated:YES];
+    
+    //scroll main view back down, but not so far that it shows the bluetooth and bean status banner
+    CGPoint scrollPoint = CGPointMake(0,self.BluetoothBeanConnectionBanner.frame.size.height);
+    [self.mainScrollView setContentOffset:scrollPoint animated:YES];
+
+    //[self.mainScrollView setContentOffset:CGPointZero animated:YES];
     [self setKi:[sender.text floatValue]];
 
 }
 
 
 - (IBAction)editedKd:(UITextField *)sender {
-    [self.mainScrollView setContentOffset:CGPointZero animated:YES];
+    
+    //scroll main view back down, but not so far that it shows the bluetooth and bean status banner
+    CGPoint scrollPoint = CGPointMake(0,self.BluetoothBeanConnectionBanner.frame.size.height);
+    [self.mainScrollView setContentOffset:scrollPoint animated:YES];
+
+    
+//    [self.mainScrollView setContentOffset:CGPointZero animated:YES];
     [self setKd:[sender.text floatValue]];
 }
 
